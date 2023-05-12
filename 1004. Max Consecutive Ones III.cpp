@@ -2,32 +2,34 @@
 using namespace std;
 int main()
 {
-    vector<int> nums = {1,1,1,0,0,0,1,1,1,1,0};
-    int k = 2;
+    vector<int> A = {0,1,1,1};
+    int B = 0;
     int i = 0;
     int j = 0;
     int ans=0;
+    vector<pair<int,pair<int,int>>>a;
     unordered_map<int,int>m;
     m[0]=0;
-    while(j<nums.size()){
+    while(j<A.size()){
         
-        // cout<<ans<<endl;
-        if(nums[j]==0){
+        if(A[j]==0){
             m[0]++;
         }
-        if(m[0]<k){
-            j++;
-            ans=max(ans,j-i+1);
-        }
-        else if(m[0]==k){
+        if(m[0]<B){
          ans=max(ans,j-i+1);
-         
+         a.push_back({j-i+1,{i,j}});
+            j++;
+        }
+        else if(m[0]==B){
+         ans=max(ans,j-i+1);
+           a.push_back({j-i+1,{i,j}});
+
          j++;
            
         }
-        else if(m[0]>k){
-            while(m[0]>k){
-                if(nums[i]==0){
+        else if(m[0]>B){
+            while(m[0]>B){
+                if(A[i]==0){
                     m[0]--;
                 }
                 i++;
@@ -36,7 +38,40 @@ int main()
         }
 
     }
+
+    sort(a.begin(),a.end());
+    int low;
+    int high;
+    int max;
+    for(auto i:a){
+        max=i.first;
+
+        // cout<<i.first<<" "<<i.second.first<<" "<<i.second.second<<endl;
+    }
+    for(auto i:a){
+        if(max==i.first){
+
+        low=i.second.first;
+        high=i.second.second;
+        // cout<<i.first<<" "<<i.second.first<<" "<<i.second.second<<endl;
+        break;
+        }
+
+    }
     
-    cout<<ans;
+    // cout<<low<<" "<<high<<endl;
+    vector<int> aans;
+    for(int i=low;i<=high;i++){
+        aans.push_back(i);
+    }
+   
+    for(auto i:aans){
+        cout<<i<<" ";
+    }
+   
+
+
+    
+    
     return 0;
 }
