@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool istrue(vector<int> weights,int days,int mid){
-    int n=weights.size();
+bool istrue(vector<int> A,int B,int mid){
+    int n=A.size();
     int k=1;
     int sum=0;
-    for(auto i:weights){
+    for(auto i:A){
         sum+=i;
         if(sum>mid){
             k++;
@@ -14,11 +14,11 @@ bool istrue(vector<int> weights,int days,int mid){
         }
 
     }
-    if(k>days){
-    cout<<"false for"<<mid<<endl;
+    if(k>B){
+    // cout<<"false for"<<mid<<endl;
         return false;
     }
-    cout<<"true for"<<mid<<endl;
+    // cout<<"true for"<<mid<<endl;
     return true;
 
 }
@@ -26,11 +26,11 @@ bool istrue(vector<int> weights,int days,int mid){
 int main()
 {
 
-    vector<int> weights= {1,2,3,4,5,6,7,8,9,10};
-    int days = 5;
+    vector<int> A= {31, 14, 19, 75 };
+    int B = 12;
     int max_cap=0;
     int total_cap=0;
-    for(auto i:weights){
+    for(auto i:A){
         total_cap+=i;
         max_cap=max(max_cap,i);
     }
@@ -40,7 +40,7 @@ int main()
     int high=total_cap;
     while(low<=high){
         int mid=low+(high-low)/2;
-        if(istrue(weights,days,mid)==true){
+        if(istrue(A,B,mid)==true){
             high=mid-1;
             res=mid;
             cout<<res<<endl;

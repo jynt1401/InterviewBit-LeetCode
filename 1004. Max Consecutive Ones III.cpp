@@ -1,77 +1,78 @@
 #include <bits/stdc++.h>
 using namespace std;
+
+
 int main()
 {
-    vector<int> A = {0,1,1,1};
-    int B = 0;
-    int i = 0;
-    int j = 0;
-    int ans=0;
-    vector<pair<int,pair<int,int>>>a;
-    unordered_map<int,int>m;
-    m[0]=0;
-    while(j<A.size()){
+
+    vector<int> A = {6,2,5,4,5,1,6};
+    for (auto i : A)
+    {
+        cout << i << " ";
+    }
+    cout << endl;
+
+    //--------right side small--------//
+     vector<int> RS;
+
+    stack<pair<int, int>> s;
+    for (int i = A.size() - 1; i >= 0; i--)
+    {
+        int cnt = 1;
+
         
-        if(A[j]==0){
-            m[0]++;
-        }
-        if(m[0]<B){
-         ans=max(ans,j-i+1);
-         a.push_back({j-i+1,{i,j}});
-            j++;
-        }
-        else if(m[0]==B){
-         ans=max(ans,j-i+1);
-           a.push_back({j-i+1,{i,j}});
-
-         j++;
-           
-        }
-        else if(m[0]>B){
-            while(m[0]>B){
-                if(A[i]==0){
-                    m[0]--;
-                }
-                i++;
+       
+        while (s.size() > 0 && s.top().first >= A[i])
+            {
+                s.pop();
             }
-            j++;
-        }
-
+            if (s.size() == 0)
+            {
+                RS.push_back(A.size());
+            }
+            else
+            {
+                RS.push_back(s.top().second);
+            }
+        
+        s.push({A[i], i});
     }
-
-    sort(a.begin(),a.end());
-    int low;
-    int high;
-    int max;
-    for(auto i:a){
-        max=i.first;
-
-        // cout<<i.first<<" "<<i.second.first<<" "<<i.second.second<<endl;
-    }
-    for(auto i:a){
-        if(max==i.first){
-
-        low=i.second.first;
-        high=i.second.second;
-        // cout<<i.first<<" "<<i.second.first<<" "<<i.second.second<<endl;
-        break;
-        }
-
-    }
+    reverse(RS.begin(), RS.end());
     
-    // cout<<low<<" "<<high<<endl;
-    vector<int> aans;
-    for(int i=low;i<=high;i++){
-        aans.push_back(i);
+
+    cout << endl;
+    //--------left side small--------//
+    vector<int> LS;
+
+    stack<pair<int, int>> ss;
+    for (int i = 0; i < A.size(); i++)
+    {
+        while (ss.size() > 0 && ss.top().first >= A[i])
+            {
+                ss.pop();
+            }
+            if (ss.size() == 0)
+            {
+                LS.push_back(-1);
+            }
+            else
+            {
+                LS.push_back(ss.top().second);
+            }
+        
+        ss.push({A[i],i});
     }
    
-    for(auto i:aans){
-        cout<<i<<" ";
+    
+
+    int area=0;
+    for(int i=0;i<A.size();i++){
+        cout<<A[i]*(RS[i]-LS[i]-1)<<endl;
+        area=max(area,A[i]*(RS[i]-LS[i]-1));
     }
-   
-
 
     
-    
+
+
     return 0;
 }

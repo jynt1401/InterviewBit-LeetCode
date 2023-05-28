@@ -1,43 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int f(vector<int>A,int B){
-    if(B==0){
-        return 0;
-    }
-    int i=0;
-    int j=0;
-    int ans=0;
-    unordered_map<int,int>m;
-    while(j<A.size()){
-        m[A[j]]++;
-        if(m.size()<=B){
-        ans=ans+abs(j-i+1);
-        // cout<<ans<<endl;
-            j++;
-        }
-        else if(m.size()>B){
-            while(m.size()>B){
-
-            m[A[i]]--;
-            if(m[A[i]]==0){
-                m.erase(A[i]);
-            }
-            i++;
-            }m[A[j]]--;
-        }
-    }
-    return ans;
+int solve(int a)
+{
+    int x = floor(log2(a)) + 1;
+   
+    int b = pow(2, x )-1;
+    
+    return a^b;
 }
+
 int main()
 {
-    vector<int> nums = {1,2};
-    int k = 1;
-    int x=f(nums,k);
-    cout<<"ans->"<<x<<endl;
-    cout<<f(nums,k-1)<<endl;
-    cout<<(f(nums,k)-f(nums,k-1));
-    return (f(nums,k)-f(nums,k-1));
-
+    int t;
+    cin>>t;
+    for(int i=0;i<t;i++){
+        int l,r;
+        cin>>l>>r;
+       
+        map<int,int>m;
+        int x=0;
+        for(int i=l;i<=r;i++){
+            int aa=solve(i);
+            if(aa>=l || aa<=r ){
+                m[aa+i]++;
+            }
+        }
+       
+        cout<<m.size()<<endl;
+    }
+    
     return 0;
 }
